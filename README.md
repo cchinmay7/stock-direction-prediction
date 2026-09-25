@@ -1,4 +1,39 @@
-# Predictive-Modeling-Finance
-Analyzing weekly stock performance via machine learning.
+# Stock Direction Prediction
 
-As part of my final project for the Mathematics for Machine Learning class I analyzed a 21-year weekly stock market dataset (1990-2010) comprising 1,089 observations. Employed Python's pandas and statsmodels libraries for data loading, preprocessing, and logistic regression analysis. Explored relationships between lag variables, trading volume, and market direction, revealing key predictors influencing stock market behavior over time. The project involved data cleaning, feature engineering, and informative visualizations to enhance understanding and decision-making in financial markets.
+Predicting the weekly direction (Up/Down) of the S&P 500 from lagged returns and trading volume, comparing logistic regression, k-nearest neighbours, and Gaussian Naive Bayes.
+
+## Data
+
+The `Weekly` S&P 500 dataset: 1,089 weekly observations from 1990 to 2010 with nine variables: `Year`, `Lag1`–`Lag5` (percentage returns for the previous five weeks), `Volume`, `Today`, and `Direction`.
+
+## Approach
+
+1. Exploratory analysis: descriptive statistics, correlation matrix, pair plots, and Up/Down counts by year.
+2. Logistic regression (`statsmodels`) on all lag and volume predictors, then on `Lag2` alone. Only `Lag1` and `Lag2` were significant at p < 0.05 in the full model.
+3. kNN (k = 1, 3, 5; Euclidean and Manhattan distance) and Gaussian Naive Bayes on the same features.
+4. Test-set accuracy and confusion matrices for every model.
+
+## Results
+
+| Model | Test accuracy |
+| --- | --- |
+| Logistic regression, `Lag2` only | **62.50%** |
+| Gaussian Naive Bayes | 58.65% |
+| kNN, k = 3 | 53.85% |
+| Logistic regression, all predictors | 53.67% |
+| kNN, k = 1 | 50.00% |
+
+A single well-chosen predictor beats the full model. The extra lags add noise rather than signal, which is consistent with weekly returns being close to a random walk.
+
+## Files
+
+- `ML.ipynb`: full analysis with outputs
+- `Predictive Modeling in Finance.pdf`: written report
+
+## Running
+
+```bash
+pip install pandas numpy matplotlib seaborn statsmodels scikit-learn jupyter
+```
+
+Place `Weekly.csv` (from the *ISLR* package) next to `ML.ipynb` and run the notebook.
